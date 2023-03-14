@@ -78,8 +78,7 @@ class GIFGenerator {
   start() {
     window.setInterval(() => {
       this.frames.push(document.querySelector('canvas').toDataURL());
-    }, 1000);
-    console.log('started GIF generation');
+    }, 750);
     window.gifFrames = this.frames;
   }
 }
