@@ -73,6 +73,17 @@ class Audio {
   }
 }
 
+class GIFGenerator {
+  frames = [];
+  start() {
+    window.setInterval(() => {
+      this.frames.push(document.querySelector('canvas').toDataURL());
+    }, 1000);
+    console.log('started GIF generation');
+    window.gifFrames = this.frames;
+  }
+}
+
 function render(canvas, particles) {
   canvas.context.fillRect(0, 0, canvas.el.width, canvas.el.height);
   
@@ -93,10 +104,17 @@ function main() {
   const audio = new Audio();
   
   document.querySelector('body').addEventListener('click', () => {
+    if (started) {
+      return;
+    }
     started = true;
     canvas.el.classList.remove('resized');
     document.querySelector('h1').hidden = true;
     audio.start();
+    
+    const gif = new GIFGenerator();
+
+    gif.start();
   });
 
   document.querySelector('body').addEventListener('mousedown', (e) => {
@@ -123,8 +141,6 @@ function main() {
       }
     }
   });
-  
-  window.setInterval(() => console.log(particles.length), 2000)
 }
 
 main();
